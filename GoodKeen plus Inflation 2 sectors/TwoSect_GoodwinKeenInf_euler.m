@@ -1,26 +1,3 @@
-nu_1 = 4;
-nu_2 = 4;
-alphap = 0.025;
-betap = 0.02;
-delta_1 = 0.01;
-delta_2 = 0.01;
-theta_1 = 0.5;
-theta_2 = 0.5;
-a_11 = 0.01;
-a_12 = 0.01;
-a_21 = 0.01;
-a_22 = 0.01;
-phi0 = 0.04/(1-0.04^2);
-phi1 = 0.04^3/(1-0.04^2);
-r = 0.03;
-eta_1 = 4;
-eta_2 = 4;
-gammainf = 0.8;
-zeta_1 = 0.5;
-zeta_2 = 0.5;
-
-save parameters.mat nu_1 nu_2 alphap betap delta_1 delta_2 theta_1 theta_2 a_11 a_12 a_21 a_22 phi0 phi1 r eta_1 eta_2 gammainf zeta_1 zeta_2;
-
 periods = 100;
 verif_IC=0;
 %in order to activate the Initial Conditions verification procedure, uncomment the following line
@@ -31,10 +8,30 @@ else
     numSteps = 1000*periods;
 end
 
-[T,Z] = euler(@TwoSect_GoodwinKeenInf_system,[0 periods],[0.3000    0.7000    1.5523    0.5000    0.1389    0.0087    0.0155    1.2000    0.9000],numSteps);
+[T,Z] = euler(@TwoSect_GoodwinKeenInf_system,[0 periods],[0.5000    0.5000    8.6240    0.5000    0.1389    0.1225    0.0123   10.0000    1.0000],numSteps);
 
 %here, just copy-paste the parameters you chose in the ModelName_system.m
 %file
+nu_1 = 4;
+nu_2 = 4;
+alpha = 0.025;
+beta = 0.02;
+delta_1 = 0.01;
+delta_2 = 0.01;
+theta_1 = 0.5;
+theta_2 = 0.5;
+a_11 = 0.01;
+a_12 = 0.01;
+a_21 = 0.01;
+a_22 = 0.01;
+phi0 = 0.04/(1-0.04^2);
+phi1 = 0.04^3/(1-0.04^2);
+eta_1 = 0.1;
+eta_2 = 0.1;
+gamma = 0.8;
+zeta_1 = 0.1;
+zeta_2 = 0.9;
+r = 0.03;
 
 %auxiliary variables
 %Q_1 = Z(:,1)/nu_1;
@@ -51,7 +48,7 @@ Pi_2 = Z(:,9).*Z(:,2)/nu_2 - a_22*Z(:,9).*Z(:,2)/nu_2 - a_12*Z(:,8).*Z(:,2)/nu_2
 pi = (Pi_1+Pi_2) ./ (Z(:,8).*Y_1 + Z(:,9).*Y_2);
 inf = zeros(numSteps+1,1);
 for k = 1:numSteps
-    inf(k) = (zeta_1*(Z(k+1,8)-Z(k,8)) + zeta_2*(Z(k+1,9)-Z(k,9))) ./ (zeta_1*Z(k,8) + zeta_2*Z(k,9));
+    inf(k) = ((zeta_1*(Z(k+1,8)-Z(k,8)) + zeta_2*(Z(k+1,9)-Z(k,9)))/(periods/numSteps)) ./ (zeta_1*Z(k,8) + zeta_2*Z(k,9));
 end
 inf(numSteps+1)=inf(numSteps) +inf(numSteps)-inf(numSteps-1);
 
