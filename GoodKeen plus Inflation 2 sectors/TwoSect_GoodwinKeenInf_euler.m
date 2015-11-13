@@ -1,3 +1,26 @@
+nu_1 = 4;
+nu_2 = 4;
+alphap = 0.025;
+betap = 0.02;
+delta_1 = 0.01;
+delta_2 = 0.01;
+theta_1 = 0.5;
+theta_2 = 0.5;
+a_11 = 0.01;
+a_12 = 0.01;
+a_21 = 0.01;
+a_22 = 0.01;
+phi0 = 0.04/(1-0.04^2);
+phi1 = 0.04^3/(1-0.04^2);
+r = 0.03;
+eta_1 = 4;
+eta_2 = 4;
+gammainf = 0.8;
+zeta_1 = 0.5;
+zeta_2 = 0.5;
+
+save parameters.mat nu_1 nu_2 alphap betap delta_1 delta_2 theta_1 theta_2 a_11 a_12 a_21 a_22 phi0 phi1 r eta_1 eta_2 gammainf zeta_1 zeta_2;
+
 periods = 100;
 verif_IC=0;
 %in order to activate the Initial Conditions verification procedure, uncomment the following line
@@ -12,26 +35,6 @@ end
 
 %here, just copy-paste the parameters you chose in the ModelName_system.m
 %file
-nu_1 = 4;
-nu_2 = 4;
-alpha = 0.025;
-beta = 0.02;
-delta_1 = 0.01;
-delta_2 = 0.01;
-theta_1 = 0.5;
-theta_2 = 0.5;
-a_11 = 0.01;
-a_12 = 0.01;
-a_21 = 0.01;
-a_22 = 0.01;
-phi0 = 0.04/(1-0.04^2);
-phi1 = 0.04^3/(1-0.04^2);
-r = 0.03;
-eta_1 = 4;
-eta_2 = 4;
-gamma = 0.8;
-zeta_1 = 0.5;
-zeta_2 = 0.5;
 
 %auxiliary variables
 %Q_1 = Z(:,1)/nu_1;

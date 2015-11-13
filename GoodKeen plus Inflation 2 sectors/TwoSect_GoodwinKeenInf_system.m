@@ -1,25 +1,6 @@
 function [ dX ] = TwoSect_GoodwinKeenInf_system( t,X )
 
-nu_1 = 4;
-nu_2 = 4;
-alpha = 0.025;
-beta = 0.02;
-delta_1 = 0.01;
-delta_2 = 0.01;
-theta_1 = 0.5;
-theta_2 = 0.5;
-a_11 = 0.01;
-a_12 = 0.01;
-a_21 = 0.01;
-a_22 = 0.01;
-phi0 = 0.04/(1-0.04^2);
-phi1 = 0.04^3/(1-0.04^2);
-r = 0.03;
-eta_1 = 4;
-eta_2 = 4;
-gamma = 0.8;
-zeta_1 = 0.5;
-zeta_2 = 0.5;
+load parameters.mat;
 
 K_1 = X(1);
 K_2 = X(2);
@@ -56,9 +37,9 @@ d_p_2 = eta_2*p_1*nu_2*(rbar-r_2);
 
 inf = (zeta_1*d_p_1 + zeta_2*d_p_2)/CPI;
 
-d_w = (phi_lambda + gamma*inf) * w;
-d_al = - alpha * al;
-d_N = beta * N;
+d_w = (phi_lambda + gammainf*inf) * w;
+d_al = - alphap * al;
+d_N = betap * N;
 d_D_1 = theta_1*f_pi*Y_1 - Pi_1;
 d_D_2 = theta_2*f_pi*Y_1 - Pi_2;
 
