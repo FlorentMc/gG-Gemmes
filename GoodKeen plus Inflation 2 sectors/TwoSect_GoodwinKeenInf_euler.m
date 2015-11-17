@@ -104,15 +104,15 @@ else
     
     subplot(6,2,8);
     plot(T,pi,'-')
-    legend('pi')
+    legend('\pi')
 
     subplot(6,2,9);
-    plot(T,Pi_1./Y_1,'-')
-    legend('pi_1')
+    plot(T,Pi_1./(Z(:,8).*Y_1),'-')
+    legend('\pi_1')
     
     subplot(6,2,10);
-    plot(T,Pi_2./Y_2,'-')
-    legend('pi_2')
+    plot(T,Pi_2./(Z(:,9).*Y_2),'-')
+    legend('\pi_2')
     
     subplot(6,2,11);
     plot(T,inf,'-')
@@ -148,12 +148,12 @@ else
     legend('D_2')
 
     subplot(7,2,7);
-    plot(T,Z(:,3).*Z(:,4).*(Z(:,1)/nu_1)./Y_1,'-')
-    legend('w*L_1/Y_1')
+    plot(T,Z(:,3).*Z(:,4).*(Z(:,1)/nu_1)./(Z(:,8).*Y_1),'-')
+    legend('wL_1/p_1Y_1')
 
     subplot(7,2,8);
-    plot(T,Z(:,3).*Z(:,4).*(Z(:,2)/nu_2)./Y_2,'-')
-    legend('w*L_2/Y_2')
+    plot(T,Z(:,3).*Z(:,4).*(Z(:,2)/nu_2)./(Z(:,9).*Y_2),'-')
+    legend('wL_2/p_2Y_2')
 
     subplot(7,2,9);
     plot(T,Z(:,4).*(Z(:,1)/nu_1)./Z(:,5),'-')
