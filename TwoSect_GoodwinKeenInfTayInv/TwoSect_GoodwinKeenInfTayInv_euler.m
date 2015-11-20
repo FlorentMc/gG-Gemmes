@@ -8,7 +8,7 @@ else
     numSteps = 1000*periods;
 end
 
-[T,Z] = euler(@TwoSect_GoodwinKeenInfTayInv_system,[0 periods],[0.5000    0.5000    1.6464    0.5000    0.1389    0.0147    0.0110    1.2000    0.9000    0.5000    0.5000],numSteps);
+[T,Z] = euler(@TwoSect_GoodwinKeenInfTayInv_system,[0 periods],[0.5000    0.5000    1.5680    0.5000    0.1389    0.0123    0.0123    1.0000    1.0000    0.7000    0.3000],numSteps);
 
 %here, just copy-paste the parameters you chose in the ModelName_system.m
 %file
@@ -27,10 +27,10 @@ phi1 = 0.04^3/(1-0.04^2);
 eta_1 = 0.1;
 eta_2 = 0.1;
 gamma = 0.8;
-zeta_1 = 0.2;
-zeta_2 = 0.8;
+zeta_1 = 0.5;
+zeta_2 = 0.5;
 rstar = 0.03; %"neutral" short term interest rate
-istar = 0.005; %target inflation rate
+istar = 0.00; %target inflation rate
 u = 9.8813e-324; %auxiliary parameter to make the Taylor rule differentiable
 phi_T = 1.5; %Taylor rule reactivity
 sigma = 0.1; %adjustment speed parameter for allocation of investment
@@ -134,26 +134,34 @@ else
     legend('Y_2')
 
     subplot(5,2,3);
+    plot(T,Z(:,8).*Y_1,'-')
+    legend('p_1Y_1')
+
+    subplot(5,2,4);
+    plot(T,Z(:,9).*Y_2,'-')
+    legend('p_2Y_2')
+
+    subplot(5,2,5);
     plot(T,Z(:,1),'-')
     legend('K_1')
 
-    subplot(5,2,4);
+    subplot(5,2,6);
     plot(T,Z(:,2),'-')
     legend('K_2')
 
-    subplot(5,2,5);
+    subplot(5,2,7);
     plot(T,Z(:,6),'-')
     legend('D_1')
 
-    subplot(5,2,6);
+    subplot(5,2,8);
     plot(T,Z(:,7),'-')
     legend('D_2')
     
-    subplot(5,2,7);
+    subplot(5,2,9);
     plot(T,Pi_1,'-')
     legend('Pi_1')
     
-    subplot(5,2,8);
+    subplot(5,2,10);
     plot(T,Pi_2,'-')
     legend('Pi_2')
 
@@ -184,42 +192,93 @@ else
     legend('iota')
     
     subplot(5,2,7);
-    plot(T,Z(:,3).*Z(:,4).*(Z(:,1)/nu_1)./(Z(:,8).*Y_1),'-')
-    legend('wL_1/p_1Y_1')
-
+    plot(T,(Z(:,8).*Z(:,1)/nu_1 - a_11*Z(:,8).*Z(:,1)/nu_1 - a_21*Z(:,9).*Z(:,1)/nu_1 - Z(:,3).*(Z(:,4).*Z(:,1)/nu_1))./(Z(:,8).*Z(:,1)),'-')
+    legend('r_1')
+    
     subplot(5,2,8);
-    plot(T,Z(:,3).*Z(:,4).*(Z(:,2)/nu_2)./(Z(:,9).*Y_2),'-')
-    legend('wL_2/p_2Y_2')
-
+    plot(T,(Z(:,9).*Z(:,2)/nu_2 - a_22*Z(:,9).*Z(:,2)/nu_2 - a_12*Z(:,8).*Z(:,2)/nu_2 - Z(:,3).*(Z(:,4).*Z(:,2)/nu_2))./(Z(:,8).*Z(:,2)),'-')
+    legend('r_2')
+    
     subplot(5,2,9);
-    plot(T,(Z(:,1)/nu_1)./(Z(:,1)/nu_1 + Z(:,2)/nu_2),'-')
-    legend('L_1/L')
-
+    plot(T,Z(:,10),'-')
+    legend('\theta_1')
+    
     subplot(5,2,10);
-    plot(T,(Z(:,2)/nu_2)./(Z(:,1)/nu_1 + Z(:,2)/nu_2),'-')
-    legend('L_2/L')
+    plot(T,Z(:,11),'-')
+    legend('\theta_2')
     
     
     figure
     subplot(5,2,1);
-    plot(T,(Z(:,8).*Z(:,1)/nu_1 - a_11*Z(:,8).*Z(:,1)/nu_1 - a_21*Z(:,9).*Z(:,1)/nu_1 - Z(:,3).*(Z(:,4).*Z(:,1)/nu_1))./(Z(:,8).*Z(:,1)),'-')
-    legend('r_1')
-    
+    plot(T,Z(:,3).*Z(:,4).*(Z(:,1)/nu_1)./(Z(:,8).*Y_1),'-')
+    legend('wL_1/p_1Y_1')
+
     subplot(5,2,2);
-    plot(T,(Z(:,9).*Z(:,2)/nu_2 - a_22*Z(:,9).*Z(:,2)/nu_2 - a_12*Z(:,8).*Z(:,2)/nu_2 - Z(:,3).*(Z(:,4).*Z(:,2)/nu_2))./(Z(:,8).*Z(:,2)),'-')
-    legend('r_2')
+    plot(T,Z(:,3).*Z(:,4).*(Z(:,2)/nu_2)./(Z(:,9).*Y_2),'-')
+    legend('wL_2/p_2Y_2')
+
+    subplot(5,2,3);
+    plot(T,(Z(:,1)/nu_1)./(Z(:,1)/nu_1 + Z(:,2)/nu_2),'-')
+    legend('L_1/L')
+
+    subplot(5,2,4);
+    plot(T,(Z(:,2)/nu_2)./(Z(:,1)/nu_1 + Z(:,2)/nu_2),'-')
+    legend('L_2/L')
+    
+    subplot(5,2,5);
+    plot(T,(Z(:,8).*Y_1)./(Z(:,8).*Y_1 + Z(:,9).*Y_2),'-')
+    legend('p_1Y_1/GDP')
+
+    subplot(5,2,6);
+    plot(T,(Z(:,9).*Y_2)./(Z(:,8).*Y_1 + Z(:,9).*Y_2),'-')
+    legend('p_2Y_2/GDP')
+    
+    subplot(5,2,7);
+    plot(T,Z(:,1)./(Z(:,1) + Z(:,2)),'-')
+    legend('K_1/K')
+    
+    subplot(5,2,8);
+    plot(T,Z(:,2)./(Z(:,1) + Z(:,2)),'-')
+    legend('K_2/K')
+    
+    subplot(5,2,9);
+    plot(T,Z(:,6)./(Z(:,6) + Z(:,7)),'-')
+    legend('D_1/D')
+    
+    subplot(5,2,10);
+    plot(T,Z(:,7)./(Z(:,6) + Z(:,7)),'-')
+    legend('D_2/D')
+    
+    
+    figure
+    subplot(5,2,1);
+    plot(T,Pi_1./(Pi_1+Pi_2),'-')
+    legend('Pi_1/Pi')
+
+    subplot(5,2,2);
+    plot(T,Pi_2./(Pi_1+Pi_2),'-')
+    legend('Pi_2/Pi')
     
     subplot(5,2,3);
-    plot(T,Z(:,10),'-')
-    legend('\theta_1')
-    
+    plot(T,Y_1./(Z(:,1)/nu_1),'-')
+    legend('Y_1/Q_1')
+
     subplot(5,2,4);
-    plot(T,Z(:,11),'-')
-    legend('\theta_2')
+    plot(T,Y_2./(Z(:,2)/nu_2),'-')
+    legend('Y_2/Q_2')
+    
     
     figure
     plot3(omega,lambda,d)
     xlabel('\omega')
     ylabel('\lambda')
     zlabel('d')
+    
+    FC(1) = omega(numSteps+1);
+    FC(2) = lambda(numSteps+1);
+    FC(3) = d(numSteps+1);
+    FC(4) = pi(numSteps+1);
+    FC(5) = r(numSteps+1);
+    FC(6) = inf(numSteps+1);
+    disp('FC vector omega lambda d pi r inf'); FC
 end
